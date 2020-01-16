@@ -47,62 +47,46 @@ class bst():
         return last
 
     def delete(self, key):
-        parent = self.root
+        parent = None
         current = self.root
-        isLeft = True
+
         while current != None:
 
             # match case
             if current.key == key:
+                parentChild = None
+                if parent.right != None and parent.right.key == current.key:
+                    parentChild = parent.right
+                else:
+                    parentChild = parent.left
+
                 # leaf node
                 if current.left == None and current.right == None:
                     # remove current node from parent
-                    if self.root == key:
-                        self.root = None
-                    elif isLeft:
-                        parent.left = None
-                    else:
-                        parent.right = None
-                    return True
+                    # This doesn't change parent.left or parent.right to None, but only parentChild to None
+                    parentChild = None
+
 
                 # one child node
                 if current.left == None:
-                    if isLeft:
-                        parent.left = current.right
-                    else:
-                        parent.right = current.right
-                    return True
+                    parentChild = current.right
                 elif current.right == None:
-                    if isLeft:
-                        parent.left = current.left
-                    else:
-                        parent.right = current.left
-                    return True
+                    parentChild = current.left
                 # two child node
                 # overview picture give some guide
                 else:
                     candidate = self.findMax(current.right)
-                    isParentLeft = isLeft
-                    isLeft = False
                     self.delete(candidate.key)
-                    if isParentLeft:
-                        candidate.left = current.left
-                        parent.left = candidate
-                    else:
-                        candidate.left = current.left
-                        parent.right = candidate
-                    # candidate.right = current.right
-                    return True
+                    parentChild = candidate
+                    candidate.right = current.right
 
                 return True
 
             # traversing
             parent = current
             if key > current.key:
-                isLeft = False
                 current = current.right
             elif key < current.key:
-                isLeft = True
                 current = current.left
 
         return False
@@ -110,17 +94,10 @@ class bst():
 if __name__ == '__main__':
     tree = bst()
 
-
     tree.insert(10, "Ten")
     tree.insert(20, "Twenty")
     tree.insert(15, "fifteen")
-    tree.insert(25, "TwentyFive")
-    tree.insert(30, "Thirty")
-    tree.insert(5, "Five")
-    tree.insert(8, "Eight")
-    tree.insert(1, "One")
-
 
     print(tree.findMin(tree.root).key)
     print(tree.findMax(tree.root).key)
-    tree.delete(5)
+    tree.delete(15)
