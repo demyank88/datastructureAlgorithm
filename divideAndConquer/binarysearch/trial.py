@@ -18,7 +18,7 @@ def binarySearch(arr, l, r, x):
 if __name__ == '__main__':
     # Driver Code
     arr = [2, 3, 4, 10, 40]
-    x = 11
+    x = 2
 
     # Function call
     result = binarySearch(arr, 0, len(arr) - 1, x)
