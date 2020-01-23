@@ -45,7 +45,6 @@ class heap():
         elif self.length < 3:
             if crtValue < leftValue:
                 self.arr[crtIdx], self.arr[leftIdx] = leftValue, crtValue
-                crtIdx = 2 * crtIdx + 1
             return self.arr
 
         # loop of swapping topDown wards

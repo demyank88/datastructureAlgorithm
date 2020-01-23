@@ -9,24 +9,19 @@ def chkBalancedParanthesis(expr):
         if c in opens:
             s.append(c)
         else:
-            if c == ']':
-                if s.pop() == '[':
-                    continue
-                else:
-                    return False
-            elif c == ')':
-                if s.pop() == '(':
-                    continue
-                else:
-                    return False
-            elif c == '}':
-                if s.pop() == '{':
-                    continue
-                else:
-                    return False
-            else:
+            try:
+                if c == ']':
+                    if s.pop() == '[':
+                        continue
+                elif c == ')':
+                    if s.pop() == '(':
+                        continue
+                elif c == '}':
+                    if s.pop() == '{':
+                        continue
+            except IndexError as ex:
                 return False
-    return True
+    return len(s) == 0
 
 if __name__ == '__main__':
     expr = "{()}[]"
