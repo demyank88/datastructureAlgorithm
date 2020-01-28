@@ -1,27 +1,30 @@
 import sys
-import operator
 
 class Graph():
     def __init__(self, cnt):
         self.cnt = cnt
         self.graph = None
         self.spt = []
+        # dp, tabulation
         self.adjDistances = [0] + [sys.maxsize] * (cnt - 1)
 
     def dijkstra(self, start):
-        culShortest = 0
-        self.spt.append(start)
-        for idx in range(self.cnt):
-            arr = [x if x != 0 else sys.maxsize for x in self.graph[idx]]
+        # self.spt.append(start)
+        for _ in range(self.cnt):
+            # arr = [x if x != 0 else sys.maxsize for x in self.graph[idx]]
             # selected node sequence
             # shorted distance integer
-            #
-            idx, minVal = min(enumerate(arr), key=lambda x: x[1])
-            # idx, minVal = min(enumerate(arr), key=operator.itemgetter(1))
-            print(idx, minVal)
-            self.spt.append(idx)
-            self.dijkstra(1)
-            pass
+            k, v = min(enumerate(self.adjDistances), key=lambda x: x[1])
+            print(f'vertex: {k}, distance: {v}')
+            addition = v
+            self.spt.append(k)
+            self.adjDistances[k] = sys.maxsize
+            arr = self.graph[k]
+            for i, v in enumerate(arr):
+                if v != 0 and i not in self.spt:
+                    self.adjDistances[i] = min(v + addition, self.adjDistances[i])
+
+        return self.spt
 
 
 if __name__ == '__main__':
