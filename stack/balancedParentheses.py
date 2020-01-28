@@ -19,7 +19,7 @@ def chkBalancedParanthesis(expr):
                 elif c == '}':
                     if s.pop() == '{':
                         continue
-            except IndexError as ex:
+            except IndexError:
                 return False
     return len(s) == 0
 
